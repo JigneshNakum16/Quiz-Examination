@@ -1,0 +1,95 @@
+[
+    {
+        "id" : 1,
+        "question" : "Which of the following is the telephone based shared Service Centre?",
+        "opt1" : "(a) Call centre",
+        "opt2" : "(b) ATM",
+        "opt3" : "(c) Phone centre",
+        "opt4" : "(d) None of these",
+        "ans" : "Call centre"
+
+    },
+    {
+        "id" : 2,
+        "question" : "A facility that allows the user to speak into a special device while typing a letter using computer is called ___",
+        "opt1" : "(a) Speaker",
+        "opt2" : "(b) Dictaphone",
+        "opt3" : "(c) Telephone",
+        "opt4" : "(d) Cell phone",
+        "ans" : "Dictaphone"
+    },
+    {
+        "id" : 3,
+        "question" : " BPO may be expanded as ___",
+        "opt1" : "(a) Business Process Outsourcing",
+        "opt2" : "(b) Business Product Outsourcing",
+        "opt3" : "(c) Business Process Outcome",
+        "opt4" : "(d) Business Product Outcome",
+        "ans" : "Business Process Outcome"
+    },
+    {
+        "id" : 4,
+        "question" : "Collection, digitization and processing of data is basic function of ____",
+        "opt1" : "(a) Call centre",
+        "opt2" : "(b) Data management",
+        "opt3" : "(c) E-Governance",
+        "opt4" : "(d) Data collection",
+        "ans" : "Data management"
+    },
+    {
+        "id" : 5,
+        "question" : "Which of the following is an IT enabled service?",
+        "opt1" : "(a) Database",
+        "opt2" : "(b) Spreadsheet",
+        "opt3" : "(c) Word processor",
+        "opt4" : "(d) E-Governance",
+        "ans" : "E-Governance"
+    },
+    {
+        "id" : 6,
+        "question" : "The term used to refer to the checking of outputs of a computers, with the corresponding input documents, is called",
+        "opt1" : "(a) Auditing through the computer",
+        "opt2" : "(b) Auditing around the computer",
+        "opt3" : "(c) Process control",
+        "opt4" : "(d) Beta-test",
+        "ans" : "Auditing around the computer"
+    },
+    {
+        "id" : 7,
+        "question" : "A channel for communicating across a boundary between two or more subsystem  is known as",
+        "opt1" : "(a) Data path",
+        "opt2" : "(b) Walk through",
+        "opt3" : "(c) Act gram",
+        "opt4" : "(d) Interface",
+        "ans" : "Interface"
+    },
+    {
+        "id" : 8,
+        "question" : "A turnkey package includes",
+        "opt1" : "(a) Training",
+        "opt2" : "(b) Software",
+        "opt3" : "(c) Hardware",
+        "opt4" : "(d) All of these",
+        "ans" : "All of these"
+    },
+    {
+        "id" : 9,
+        "question" : "Which of the following is not true of the conversion phase of the development life cycle?",
+        "opt1" : "(a) Documentation should be emphasized",
+        "opt2" : "(b) The non-machine components of the system should be considered",
+        "opt3" : "(c) Steps must be taken to phase out the old system",
+        "opt4" : "(d) The user and systems personnel must work closely together",
+        "ans" : "Documentation should be emphasized"
+    },
+    {
+        "id" : 10,
+        "question" : "In the system concepts, the term organization",
+        "opt1" : "(a) Refers to the holism of systems",
+        "opt2" : "(b) Means that parts of the computer system depend on one another",
+        "opt3" : "(c) Refers to the manner in which each component functions with other components of the system",
+        "opt4" : "(d) Implies structure and order",
+        "ans" : "Implies structure and order"
+    }
+   
+
+]

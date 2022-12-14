@@ -1,0 +1,21 @@
+.Quiz{
+    width: 700px;
+    background-color: rgba(0, 0, 0, 0.225);
+    padding: 50px;
+    position: relative;
+}
+.Option{
+    display: flex;
+    flex-direction: column;
+}
+.TenMins{
+    position: absolute;
+    top: 0;
+    right: 50px;
+}
+.Mins{
+    position: relative;
+    bottom: 50px ;
+
+    left: 245px;
+}
