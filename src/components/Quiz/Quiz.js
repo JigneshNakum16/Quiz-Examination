@@ -1,90 +1,100 @@
 import React, { useState, useEffect } from "react";
 import style from "./Quiz.module.css";
-import Question from "./Questions.json";
-import Timer from "../Timer/Timer";
+// import Question from "./Questions.json";
+import axios from "axios";
+// import Timer from "../Timer/Timer";
 
 const Quiz = () => {
   const [question, setQuestion] = useState({
-    allQue: Question,
+    allQue: "",
     currentQue: "",
     nextQue: "",
     queIndex: 0,
-    ans: "",
-    queCount : 0,
-    givenAns : false
+    answer: "",
+    queCount: 0,
+    trueAns: 0,
+    falseAns: 0,
   });
 
+  const fetchQuestion = async () => {
+    await axios
+      .get(
+        `https://test-examination-9a8d5-default-rtdb.firebaseio.com/Questions.json`
+      )
+      .then((response) => {
+        setQuestion({ 
+           ...question,
+           allQue: response.data,
+
+          });
+          // setTimeout(() => {
+            nextHandler()
+          // }, 1000);
+      
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
 
 
+
+  
   const nextHandler = () => {
-    if (question.nextQue !== undefined) {
+    if (question?.nextQue !== undefined) {
       setQuestion({
         ...question,
         currentQue: question.allQue[question.queIndex],
         nextQue: question.allQue[question.queIndex + 1],
         queIndex: question.queIndex + 1,
-        ans: question.allQue[question.queIndex].ans,
-        queCount : question.queCount + 1,
-        // givenAns : 
+        answer: question.allQue[question.queIndex].answer,
+        queCount: question.queCount + 1,
+      });
+
+    } else {
+      alert("Finish the Quiz");
+    }
+  };
+  
+  console.log('question', question)
+
+
+  // setInterval(nextHandler, 60000);
+
+  const optionHandler = (e) => {
+    if (e.target.innerHTML.toLowerCase() === question.answer.toLowerCase()) {
+      console.log("Answer is right");
+      setQuestion({
+        ...question,
+        trueAns: question.trueAns + 1,
+      });
+    } else {
+      console.log("Answer is wrong");
+
+      setQuestion({
+        ...question,
+        falseAns: question.falseAns + 1,
       });
     }
-    else{
-      alert("Finish the Questions")
-    }
   };
-
-  // console.log('question.ans', question)
-
-  const optionHandler = () => {
-    debugger
-    // const answers = Question.map((ans ) => {
-    //   return ans
-    // })
-
-    console.log('CurrentQue', question.currentQue.ans)
-
-    console.log('Answers', question.ans)
-
-    if(question.currentQue.ans !== question.ans){
-      console.log("Answer is wrong")
-      // setQuestion({
-      //   ...question,
-      //   givenAns : true
-      // })
-    }
-    else{
-      console.log("Answer is right")
-
-      // setQuestion({
-      //   ...question,
-      //   givenAns : false
-      // })
-    }
-  };
-
-  console.log('Given Answers', question.givenAns)
-
 
   useEffect(() => {
-    nextHandler();
+    fetchQuestion();
+
   }, []);
 
   return (
     <>
-      <div className={style.TenMins}>
-        <Timer time={600000} />
-      </div>
+      <div className={style.TenMins}>{/* <Timer time={600000} /> */}</div>
       <div className={style.Quiz}>
-        <div className={style.Mins}>
-          <Timer time={60000} />
-        </div>
+        <div className={style.Mins}>{/* <Timer time={60000} /> */}</div>
         <h2>Que. {question.queCount} Out Of 10</h2>
-        <h3>{question.currentQue.question}</h3>
+        <h3>{question.currentQue.Question}</h3>
 
-        <p onClick={optionHandler}>{question.currentQue.opt1}</p>
-        <p onClick={optionHandler}>{question.currentQue.opt2}</p>
-        <p onClick={optionHandler}>{question.currentQue.opt3}</p>
-        <p onClick={optionHandler}>{question.currentQue.opt4}</p>
+        <p onClick={optionHandler}>{question.currentQue.option1}</p>
+        <p onClick={optionHandler}>{question.currentQue.option2}</p>
+        <p onClick={optionHandler}>{question.currentQue.option3}</p>
+        <p onClick={optionHandler}>{question.currentQue.option4}</p>
 
         {/* <input type="radio" name="opt1" id="opt1" value={que.opt1}/>
       <label htmlFor="opt1">{que.opt1}</label>

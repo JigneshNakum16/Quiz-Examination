@@ -24,6 +24,8 @@ const Information = () => {
               <p>Hello EveryOne This is Quiz</p>
               <p>10 Questions are given in this quiz</p>
               <p>And Each Questions is given one minute</p>
+              <p>All The Best.</p>
+
             </div>
             <div className={style.btns}>
               <button type="button" className="btn btn-primary" onClick={backOnClick} >Back</button>
