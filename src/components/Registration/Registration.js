@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { registrationSchema } from "../../schemas/Validation";
@@ -12,7 +12,7 @@ const Registration = () => {
   //     age: "",
   //     email: "",
   //     mobile: "",
-  //     fleid: "",
+  //     flied: "",
   //   });
 
   const Navigate = useNavigate();
@@ -30,13 +30,13 @@ const Registration = () => {
       validationSchema: registrationSchema,
       onSubmit: (value, action) => {
         Navigate("/info");
-        setRegistation(value);
-console.log('value', value)
+        setRegistration(value);
+        console.log("value", value);
         action.resetForm();
       },
     });
   console.log("values", values);
-  const setRegistation = async (values) => {
+  const setRegistration = async (values) => {
     await axios
       .post(
         `https://test-examination-9a8d5-default-rtdb.firebaseio.com/registration.json`,
@@ -49,7 +49,6 @@ console.log('value', value)
         console.log("error", error);
       });
   };
-
 
   //   const handleChange = (event) => {
   //     const id = Math.round(Math.random() * 1000);
