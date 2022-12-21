@@ -1,40 +1,30 @@
 import React, { useState, useEffect } from "react";
 import "./Timer.css";
-const Timer = (props) => {
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
 
-  const date = Date.now() + props.time;
+const Timer = ({time}) => {
 
-  //   const getTime = (date) => {
-  //     const time = date - Date.now();
-  //     setMinutes(Math.floor((time / 1000 / 60) % 60));
-  //     setSeconds(Math.floor((time / 1000) % 60));
-  //   };
-  localStorage.setItem("Time",seconds)
-  
-  
-  
+  const [minutes] = useState(0);
+  const initialTimer = localStorage.getItem("timer") ?? time;
+  let timeoutId = null;
+  const [timer, setTimer] = useState(initialTimer);
+
+
+
+  const countTimer = () => {
+    if (timer <= 0) {
+      clearTimeout(timeoutId);
+      localStorage.removeItem("timer");
+    } else {
+      timeoutId = setTimeout(() => {
+        setTimer(timer - 1);
+      }, 1000);
+      localStorage.setItem("timer", timer);
+    }
+  };
+
   useEffect(() => {
-    
-    const interval = setInterval(() => {
-      let time = date - Date.now();
-      
-      // console.log('time', time)
-      // localStorage.setItem("Time",time)
-
-      setMinutes(Math.floor((time / 1000 / 60) % 60));
-      setSeconds(Math.floor((time / 1000) % 60));
-
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-
-      const sec = localStorage.getItem("Time")
-  console.log('sec', sec)
-  // console.log('minutes', minutes)
-  // console.log('seconds', seconds)
+    countTimer();
+  }, [timer]);
 
   return (
     <div className="container">
@@ -46,8 +36,8 @@ const Timer = (props) => {
           </div>
         </div>
         <div className="col-4">
-          <div className="boxsecond">
-            <p id="second">{seconds < 10 ? "0" + sec : sec}</p>
+          <div className="second">
+            <p id="second">{timer < 10 ? "0" + timer : timer}</p>
             <span className="text">Seconds</span>
           </div>
         </div>
