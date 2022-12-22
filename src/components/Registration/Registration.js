@@ -3,17 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { registrationSchema } from "../../schemas/Validation";
 import style from "./Registration.module.css";
-import axios from "axios";
+import {  useDispatch } from "react-redux";
+import { registerData } from "../Actions/index";
 
-const Registration = () => {
-  //   const [value, setValue] = useState({
-  //     // id: "",
-  //     fname: "",
-  //     age: "",
-  //     email: "",
-  //     mobile: "",
-  //     flied: "",
-  //   });
+const Registration = (props) => {
+
+  const dispatch = useDispatch();
 
   const Navigate = useNavigate();
   const initialValues = {
@@ -28,27 +23,14 @@ const Registration = () => {
     useFormik({
       initialValues,
       validationSchema: registrationSchema,
+
       onSubmit: (value, action) => {
+        dispatch(registerData(value));
         Navigate("/info");
-        setRegistration(value);
-        console.log("value", value);
         action.resetForm();
       },
     });
-  console.log("values", values);
-  const setRegistration = async (values) => {
-    await axios
-      .post(
-        `https://test-examination-9a8d5-default-rtdb.firebaseio.com/registration.json`,
-        values
-      )
-      .then((response) => {
-        console.log("response", response);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
+
 
   //   const handleChange = (event) => {
   //     const id = Math.round(Math.random() * 1000);
