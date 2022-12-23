@@ -1,11 +1,11 @@
-import registerReducer from "./components/Reducers/register";
-import fetchReducer from "./components/Reducers/quiz";
+import registerReducer from "./store/Reducers/register";
+import fetchReducer from "./store/Reducers/quiz";
 
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
-  register : registerReducer,
-  quiz : fetchReducer
+  register: registerReducer,
+  quiz: fetchReducer,
 });
 
 export default rootReducer;

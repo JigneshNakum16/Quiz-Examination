@@ -1,45 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./Quiz.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchQuestion } from "../Actions/index";
-// import axios from "axios";
+import { fetchQuestion } from "../../store/Actions/index";
 
 const Quiz = () => {
-  // const [question, setQuestion] = useState({
-  //   allQue: [],
-  //   currentQue: {},
-  //   nextQue: {},
-  //   queIndex: 0,
-  //   answer: "",
-  //   queCount: 0,
-  //   trueAns: 0,
-  //   falseAns: 0,
-  // });
+
+
   // const [minutes] = useState(0);
   // const initialTimer = localStorage.getItem("timer") ?? 15;
-  let timeoutId = null;
+  // let timeoutId = null;
   // const [timer, setTimer] = useState(initialTimer);
-const {allQue,currentQue,nextQue,queCount,queIndex}=useSelector(state=>state.quiz);
+  const { allQue, currentQue, nextQue, queCount, queIndex, answer } =
+    useSelector((state) => state.quiz);
+
   const dispatch = useDispatch();
-  // console.log('allQue', allQue)
-
-  // const fetchQuestion = async () => {
-  //   await axios
-  //     .get(
-  //       `https://test-examination-9a8d5-default-rtdb.firebaseio.com/Questions.json`
-  //     )
-  //     .then((response) => {
-  //       setQuestion({
-  //         ...question,
-  //         allQue: response.data,
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.log("error", error);
-  //     });
-  // };
-
-  
 
   // const countTimer = () => {
   //   if (timer <= 0) {
@@ -59,24 +33,26 @@ const {allQue,currentQue,nextQue,queCount,queIndex}=useSelector(state=>state.qui
   // }, [timer]);
 
   useEffect(() => {
+    dispatch(fetchQuestion());
     nextHandler();
-  }, [allQue]);
+  }, []);
 
   const nextHandler = () => {
     if (nextQue !== undefined) {
       // clearTimeout(timeoutId);
       // localStorage.removeItem("timer");
 
-      // setQuestion({
-      //   ...question,
-      //   currentQue: question.allQue[question.queIndex],
-      //   nextQue: question.allQue[question.queIndex + 1],
-      //   queIndex: question.queIndex + 1,
-      //   answer: question.allQue[question.queIndex]?.answer,
-      //   queCount: question.queCount + 1,
-      // });
+      // const que = {
+      //   
+      //   currentQue: action.fetchQue[state.queIndex],
+      //   nextQue: action.fetchQue[state.queIndex + 1],
+      //   queIndex: state.queIndex,
+      //   answer: action.fetchQue[state.queIndex]?.answer,
+      //   queCount: state.queIndex + 1,
+      // }
 
-      dispatch(fetchQuestion(allQue));
+
+      // dispatch(fetchQuestion(nextQue))
 
       // setTimer(15);
       // localStorage.setItem("timer", timer);
@@ -84,26 +60,25 @@ const {allQue,currentQue,nextQue,queCount,queIndex}=useSelector(state=>state.qui
       // clearTimeout(timeoutId);
       // localStorage.removeItem("timer");
       // alert("Finish The Quiz");
-      // console.log("Finish The Quiz");
 
+      console.log("Finish The Quiz");
     }
   };
 
   const optionHandler = (e) => {
-  //   if (e.target.innerHTML.toLowerCase() === question.answer.toLowerCase()) {
-  //     console.log("Answer is right");
-  //     setQuestion({
-  //       ...question,
-  //       trueAns: question.trueAns + 1,
-  //     });
-  //   } else {
-  //     console.log("Answer is wrong");
-
-  //     setQuestion({
-  //       ...question,
-  //       falseAns: question.falseAns + 1,
-  //     });
-  //   }
+    //   if (e.target.innerHTML.toLowerCase() === question.answer.toLowerCase()) {
+    //     console.log("Answer is right");
+    //     setQuestion({
+    //       ...question,
+    //       trueAns: question.trueAns + 1,
+    //     });
+    //   } else {
+    //     console.log("Answer is wrong");
+    //     setQuestion({
+    //       ...question,
+    //       falseAns: question.falseAns + 1,
+    //     });
+    //   }
   };
 
   useEffect(() => {

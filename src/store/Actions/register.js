@@ -8,7 +8,7 @@ export const register_start = () => {
 };
 
 export const register_success = (data) => {
-  console.log("data", data);
+  console.log("data_Success", data);
   return {
     type: actionType.REGISTER_SUCCESS,
     data,
@@ -32,7 +32,7 @@ export const registerData = (values) => {
       )
       .then((response) => { 
         console.log("response", response);
-        dispatch(register_success())
+        dispatch(register_success(response.data))
       })
       .catch((error) => {
         console.log("error", error);

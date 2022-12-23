@@ -3,11 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { registrationSchema } from "../../schemas/Validation";
 import style from "./Registration.module.css";
-import {  useDispatch } from "react-redux";
-import { registerData } from "../Actions/index";
+import { useDispatch } from "react-redux";
+import { registerData } from "../../store/Actions/index";
 
 const Registration = (props) => {
-
   const dispatch = useDispatch();
 
   const Navigate = useNavigate();
@@ -30,7 +29,6 @@ const Registration = (props) => {
         action.resetForm();
       },
     });
-
 
   //   const handleChange = (event) => {
   //     const id = Math.round(Math.random() * 1000);

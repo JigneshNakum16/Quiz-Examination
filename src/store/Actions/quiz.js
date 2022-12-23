@@ -7,10 +7,10 @@ export const fetchQuestionStart = () => {
   };
 };
 
-export const fetchQuestionSuccess = (fetchQue) => {
+export const fetchQuestionSuccess = (data) => {
   return {
     type: actionType.FETCH_QUESTION_SUCCESS,
-    fetchQue,
+    data,
   };
 };
 
@@ -21,8 +21,8 @@ export const fetchQuestionFail = (error) => {
   };
 };
 
-export const fetchQuestion = (question) => {
-//   console.log("question", question);
+export const fetchQuestion = () => {
+
   return async (dispatch) => {
     dispatch(fetchQuestionStart());
 
