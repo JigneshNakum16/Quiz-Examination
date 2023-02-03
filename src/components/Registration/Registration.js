@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { registrationSchema } from "../../schemas/Validation";
 import style from "./Registration.module.css";
 import { useDispatch } from "react-redux";
-import { registerData } from "../../store/Actions/index";
+import { authActions } from "../../redux/Auth/action";
 
 const Registration = (props) => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const Registration = (props) => {
       validationSchema: registrationSchema,
 
       onSubmit: (value, action) => {
-        dispatch(registerData(value));
+        dispatch(authActions.userRegistration(value));
         Navigate("/info");
         action.resetForm();
       },

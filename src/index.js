@@ -1,29 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
-import rootReducer from "./rootReducer";
-import { applyMiddleware, compose, createStore } from "redux";
 import { Provider } from "react-redux";
 import "./index.css";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import thunk from "redux-thunk";
-import logger from "redux-logger";
+import store from "./redux/store";
 
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-
-
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, logger)));
-
+// const persistor = persistStore(store)
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
+    {/* <PersistGate loading={null} persistor={persistor}> */}
+      <Router>
+        <App />
+      </Router>
+    {/* </PersistGate> */}
   </Provider>
 );
 
-reportWebVitals();

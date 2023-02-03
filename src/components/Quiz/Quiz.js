@@ -1,17 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Quiz.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchQuestion } from "../../store/Actions/index";
+import { quizActions } from "../../redux/Quiz/action";
+// import Timer from "../Timer/Timer";
 
 const Quiz = () => {
-
-
-  // const [minutes] = useState(0);
-  // const initialTimer = localStorage.getItem("timer") ?? 15;
+  const [minutes] = useState(0);
+  const initialTimer = localStorage.getItem("timer") ?? 15;
   // let timeoutId = null;
-  // const [timer, setTimer] = useState(initialTimer);
-  const { allQue, currentQue, nextQue, queCount, queIndex, answer } =
-    useSelector((state) => state.quiz);
+  const [timer, setTimer] = useState(initialTimer);
+
+  // const { allQue, currentQue, nextQue, queCount, queIndex, answer } =
+  //   useSelector((state) => state.quiz);
+
+  const quiz = useSelector((state) => state.quiz);
+  console.log("quiz", quiz.allQue);
+
+  // quiz.map((data,index) => {
+  //   return (
+
+  //   )
+  // })
+
+  const [quizQuestions, setQuizQuestions] = useState({
+    allQue: quiz,
+    currentQue: null,
+    nextQue: null,
+    queIndex: 0,
+    answer: "",
+    queCount: 1,
+  });
+
+
+  console.log('quizQuestions', quizQuestions)
 
   const dispatch = useDispatch();
 
@@ -28,68 +49,57 @@ const Quiz = () => {
   //   }
   // };
 
+  const nextHandler = () => {
+    // if (nextQue !== undefined) {
+    // clearTimeout(timeoutId);
+    // localStorage.removeItem("timer");
+    // const que = {
+    //   currentQue: action.fetchQue[state.queIndex],
+    //   nextQue: action.fetchQue[state.queIndex + 1],
+    //   queIndex: state.queIndex,
+    //   answer: action.fetchQue[state.queIndex]?.answer,
+    //   queCount: state.queIndex + 1,
+    // }
+    // dispatch(fetchQuestion(nextQue))
+    // setTimer(15);
+    // localStorage.setItem("timer", timer);
+    // }
+    // else {
+    //   // clearTimeout(timeoutId);
+    //   // localStorage.removeItem("timer");
+    //   // alert("Finish The Quiz");
+    //   console.log("Finish The Quiz");
+    // }
+  };
+
+  // const optionHandler = (e) => {
+  //   if (e.target.innerHTML.toLowerCase() === question.answer.toLowerCase()) {
+  //     console.log("Answer is right");
+  //     setQuestion({
+  //       ...question,
+  //       trueAns: question.trueAns + 1,
+  //     });
+  //   } else {
+  //     console.log("Answer is wrong");
+  //     setQuestion({
+  //       ...question,
+  //       falseAns: question.falseAns + 1,
+  //     });
+  //   }
+  // };
+
   // useEffect(() => {
   //   countTimer();
   // }, [timer]);
 
   useEffect(() => {
-    dispatch(fetchQuestion());
-    nextHandler();
+    dispatch(quizActions.fetchQuestion());
   }, []);
-
-  const nextHandler = () => {
-    if (nextQue !== undefined) {
-      // clearTimeout(timeoutId);
-      // localStorage.removeItem("timer");
-
-      // const que = {
-      //   
-      //   currentQue: action.fetchQue[state.queIndex],
-      //   nextQue: action.fetchQue[state.queIndex + 1],
-      //   queIndex: state.queIndex,
-      //   answer: action.fetchQue[state.queIndex]?.answer,
-      //   queCount: state.queIndex + 1,
-      // }
-
-
-      // dispatch(fetchQuestion(nextQue))
-
-      // setTimer(15);
-      // localStorage.setItem("timer", timer);
-    } else {
-      // clearTimeout(timeoutId);
-      // localStorage.removeItem("timer");
-      // alert("Finish The Quiz");
-
-      console.log("Finish The Quiz");
-    }
-  };
-
-  const optionHandler = (e) => {
-    //   if (e.target.innerHTML.toLowerCase() === question.answer.toLowerCase()) {
-    //     console.log("Answer is right");
-    //     setQuestion({
-    //       ...question,
-    //       trueAns: question.trueAns + 1,
-    //     });
-    //   } else {
-    //     console.log("Answer is wrong");
-    //     setQuestion({
-    //       ...question,
-    //       falseAns: question.falseAns + 1,
-    //     });
-    //   }
-  };
-
-  useEffect(() => {
-    fetchQuestion();
-  }, []);
-
   return (
     <>
-      {/* <div className="TenMins"><Timer time={600000} /></div> */}
+      {/* <div className="TenMins"><Timer time={600000} /></div>   */}
       <div className="Quiz">
-        {/* <div className="Mins">
+        <div className="Mins">
           <div className="container">
             <div className="Timer">
               <div className="col-4">
@@ -106,18 +116,22 @@ const Quiz = () => {
               </div>
             </div>
           </div>
-        </div> */}
-        <h2>Que. {queCount} Out Of 10</h2>
-        <h3>{currentQue?.Question}</h3>
+        </div>
 
-        <p onClick={optionHandler}>{currentQue?.option1}</p>
-        <p onClick={optionHandler}>{currentQue?.option2}</p>
-        <p onClick={optionHandler}>{currentQue?.option3}</p>
-        <p onClick={optionHandler}>{currentQue?.option4}</p>
+        <div>
+
+        <h2>Que. {quizQuestions.queCount} Out Of 10</h2>
+          {/* <h3>{currentQue?.Question}</h3> */}
+
+          {/* <p onClick={optionHandler}>{currentQue?.option1}</p>
+          <p onClick={optionHandler}>{currentQue?.option2}</p>
+          <p onClick={optionHandler}>{currentQue?.option3}</p>
+        <p onClick={optionHandler}>{currentQue?.option4}</p> */}
 
         <button type="button" className="btn btn-primary" onClick={nextHandler}>
           Next
         </button>
+      </div>
       </div>
     </>
   );

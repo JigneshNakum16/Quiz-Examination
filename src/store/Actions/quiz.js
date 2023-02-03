@@ -8,6 +8,7 @@ export const fetchQuestionStart = () => {
 };
 
 export const fetchQuestionSuccess = (data) => {
+  console.log('data', data)
   return {
     type: actionType.FETCH_QUESTION_SUCCESS,
     data,
@@ -15,6 +16,7 @@ export const fetchQuestionSuccess = (data) => {
 };
 
 export const fetchQuestionFail = (error) => {
+  console.log('error', error)
   return {
     type: actionType.FETCH_QUESTION_FAIL,
     error,
@@ -24,6 +26,7 @@ export const fetchQuestionFail = (error) => {
 export const fetchQuestion = () => {
 
   return async (dispatch) => {
+      debugger
     dispatch(fetchQuestionStart());
 
     await axios
@@ -31,6 +34,7 @@ export const fetchQuestion = () => {
         `https://test-examination-9a8d5-default-rtdb.firebaseio.com/Questions.json`
       )
       .then((response) => {
+        console.log('response', response)
         dispatch(fetchQuestionSuccess(response?.data));
       })
       .catch((error) => {

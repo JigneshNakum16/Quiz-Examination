@@ -1,12 +1,17 @@
 import React from "react";
 import style from "./Information.module.css";
 import { useNavigate } from "react-router-dom";
+// import { quizActions } from "../../redux/Quiz/action";
+// import { useDispatch } from "react-redux";
 
 const Information = () => {
   const Navigation = useNavigate();
+  // const dispatch = useDispatch()
 
   const handleOnClick = () => {
+    
     Navigation("/quiz");
+    // dispatch(quizActions.fetchQuestion());
   };
 
   const backOnClick = () => {
