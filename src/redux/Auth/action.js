@@ -4,7 +4,7 @@ export const authActions = {
   REGISTER_FAIL: "REGISTER_FAIL",
 
   userRegistration: (RegisterData) => {
-    console.log("RegisterData", RegisterData);
+    // console.log("RegisterData", RegisterData);
     return {
       type: authActions.REGISTER_START,
       data: RegisterData,

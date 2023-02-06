@@ -2,102 +2,137 @@ import React, { useEffect, useState } from "react";
 import "./Quiz.css";
 import { useDispatch, useSelector } from "react-redux";
 import { quizActions } from "../../redux/Quiz/action";
-// import Timer from "../Timer/Timer";
+import { useNavigate } from "react-router-dom";
 
 const Quiz = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
   const [minutes] = useState(0);
   const initialTimer = localStorage.getItem("timer") ?? 15;
-  // let timeoutId = null;
+  let timeoutId = null;
   const [timer, setTimer] = useState(initialTimer);
+  const [required, setRequired] = useState(false);
 
-  // const { allQue, currentQue, nextQue, queCount, queIndex, answer } =
-  //   useSelector((state) => state.quiz);
+  const { allQue } = useSelector((state) => state.quiz);
 
-  const quiz = useSelector((state) => state.quiz);
-  console.log("quiz", quiz.allQue);
+  const updatedData = JSON.parse(localStorage.getItem("CurrentQue"));
 
-  // quiz.map((data,index) => {
-  //   return (
+  console.log('updatedData', updatedData)
 
-  //   )
-  // })
+  // console.log("allQue[0].Question", allQue[0].Question);
 
-  const [quizQuestions, setQuizQuestions] = useState({
-    allQue: quiz,
-    currentQue: null,
-    nextQue: null,
-    queIndex: 0,
-    answer: "",
+  const initialState = {
+    allQue: allQue,
+    currentQue: allQue[0]?.Question,
+    nextQue: allQue[1]?.Question,
+    queIndex: allQue[0]?.id,
+    answer: allQue[0]?.answer,
     queCount: 1,
-  });
-
-
-  console.log('quizQuestions', quizQuestions)
-
-  const dispatch = useDispatch();
-
-  // const countTimer = () => {
-  //   if (timer <= 0) {
-  //     clearTimeout(timeoutId);
-  //     localStorage.removeItem("timer");
-  //     nextHandler();
-  //   } else {
-  //     timeoutId = setTimeout(() => {
-  //       setTimer(timer - 1);
-  //     }, 1000);
-  //     localStorage.setItem("timer", timer);
-  //   }
-  // };
-
-  const nextHandler = () => {
-    // if (nextQue !== undefined) {
-    // clearTimeout(timeoutId);
-    // localStorage.removeItem("timer");
-    // const que = {
-    //   currentQue: action.fetchQue[state.queIndex],
-    //   nextQue: action.fetchQue[state.queIndex + 1],
-    //   queIndex: state.queIndex,
-    //   answer: action.fetchQue[state.queIndex]?.answer,
-    //   queCount: state.queIndex + 1,
-    // }
-    // dispatch(fetchQuestion(nextQue))
-    // setTimer(15);
-    // localStorage.setItem("timer", timer);
-    // }
-    // else {
-    //   // clearTimeout(timeoutId);
-    //   // localStorage.removeItem("timer");
-    //   // alert("Finish The Quiz");
-    //   console.log("Finish The Quiz");
-    // }
+    trueAns: 0,
+    falseAns: 0,
   };
 
-  // const optionHandler = (e) => {
-  //   if (e.target.innerHTML.toLowerCase() === question.answer.toLowerCase()) {
-  //     console.log("Answer is right");
-  //     setQuestion({
-  //       ...question,
-  //       trueAns: question.trueAns + 1,
-  //     });
-  //   } else {
-  //     console.log("Answer is wrong");
-  //     setQuestion({
-  //       ...question,
-  //       falseAns: question.falseAns + 1,
-  //     });
-  //   }
-  // };
+  console.log("initialState", initialState);
+
+
+
+  const [quizQuestions, setQuizQuestions] = useState(
+    // updatedData === null ? initialState : updatedData
+    updatedData || initialState
+  );
+
+  console.log("quizQuestions", quizQuestions);
 
   // useEffect(() => {
-  //   countTimer();
-  // }, [timer]);
+  
+  //   if(quizQuestions.allQue === null){
+  //     setQuizQuestions(initialState)
+  //   }
+  //   else{
+  //     setQuizQuestions( updatedData || initialState)
+  //   }
+  // }, [])
+
+
+
+  const countTimer = () => {
+    if (timer <= 0) {
+      nextHandler();
+      clearTimeout(timeoutId);
+      localStorage.removeItem("timer");
+    } else {
+      timeoutId = setTimeout(() => {
+        setTimer(timer - 1);
+      }, 1000);
+      localStorage.setItem("timer", timer);
+    }
+  };
+
+  const nextHandler = () => {
+    clearTimeout(timeoutId);
+    localStorage.removeItem("timer");
+    setRequired(false);
+
+    if (quizQuestions.nextQue !== undefined) {
+      setQuizQuestions({
+        ...quizQuestions,
+        allQue: quizQuestions?.allQue,
+        currentQue:
+          quizQuestions?.allQue[quizQuestions?.queIndex + 1]?.Question,
+        nextQue: quizQuestions?.allQue[quizQuestions?.queCount + 1]?.Question,
+        queIndex: quizQuestions?.queIndex + 1,
+        answer: quizQuestions?.allQue[quizQuestions?.queIndex + 1]?.answer,
+        queCount: quizQuestions?.queCount + 1,
+      });
+      localStorage.removeItem("timer");
+      setTimer(15);
+      localStorage.setItem("timer", timer);
+    } else {
+      setTimer(0);
+      clearTimeout(timeoutId);
+      localStorage.removeItem("timer");
+      // setQuizQuestions(initialState)
+      // console.log("Finish The Quiz");
+      // navigate('/')
+      alert("Finish The Quiz");
+    }
+  };
+
+  const optionHandler = (e) => {
+    setRequired(false);
+
+    if (
+      e.target.innerHTML.toLowerCase() ===
+      quizQuestions?.allQue[quizQuestions?.queIndex]?.answer.toLowerCase()
+    ) {
+      // console.log("Answer is right");
+      setQuizQuestions({
+        ...quizQuestions,
+        trueAns: quizQuestions.trueAns + 1,
+      });
+      setRequired(true);
+    } else {
+      // console.log("Answer is wrong");
+      setQuizQuestions({
+        ...quizQuestions,
+        falseAns: quizQuestions.falseAns + 1,
+      });
+      setRequired(true);
+    }
+  };
+
+  localStorage.setItem("CurrentQue", JSON.stringify(quizQuestions));
+
+  useEffect(() => {
+    countTimer();
+  }, [timer]);
 
   useEffect(() => {
     dispatch(quizActions.fetchQuestion());
   }, []);
+
   return (
     <>
-      {/* <div className="TenMins"><Timer time={600000} /></div>   */}
       <div className="Quiz">
         <div className="Mins">
           <div className="container">
@@ -119,19 +154,32 @@ const Quiz = () => {
         </div>
 
         <div>
+          <h2>Que. {quizQuestions?.queCount} Out Of 10</h2>
 
-        <h2>Que. {quizQuestions.queCount} Out Of 10</h2>
-          {/* <h3>{currentQue?.Question}</h3> */}
+          <h3>{quizQuestions?.currentQue}</h3>
 
-          {/* <p onClick={optionHandler}>{currentQue?.option1}</p>
-          <p onClick={optionHandler}>{currentQue?.option2}</p>
-          <p onClick={optionHandler}>{currentQue?.option3}</p>
-        <p onClick={optionHandler}>{currentQue?.option4}</p> */}
+          <p onClick={optionHandler}>
+            {quizQuestions?.allQue[quizQuestions?.queIndex]?.option1}
+          </p>
+          <p onClick={optionHandler}>
+            {quizQuestions?.allQue[quizQuestions?.queIndex]?.option2}
+          </p>
+          <p onClick={optionHandler}>
+            {quizQuestions?.allQue[quizQuestions?.queIndex]?.option3}
+          </p>
+          <p onClick={optionHandler}>
+            {quizQuestions?.allQue[quizQuestions?.queIndex]?.option4}
+          </p>
 
-        <button type="button" className="btn btn-primary" onClick={nextHandler}>
-          Next
-        </button>
-      </div>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={nextHandler}
+            disabled={!required}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </>
   );

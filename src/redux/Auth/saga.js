@@ -6,7 +6,7 @@ export function* userRegistration() {
   yield takeLatest(authActions.REGISTER_START, function* ({data}) {
     try {
       const response = yield axios.post(`https://test-examination-9a8d5-default-rtdb.firebaseio.com/register.json`,data);
-      console.log('response', response)
+      // console.log('response', response)
       yield put({
         type: authActions.REGISTER_SUCCESS,
         payload: response?.data?.name
